@@ -38,7 +38,7 @@ hr {
 
 #gameover {
     position: absolute;
-    top: auto;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.8);
@@ -142,3 +142,4 @@ hr {
     justify-content: center;
     align-items: center;
 }
+
