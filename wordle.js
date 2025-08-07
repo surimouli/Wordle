@@ -36,7 +36,7 @@ function initialize() {
     //Create the keyboard
     let keyboard = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L", " "],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
     ]
 
@@ -79,6 +79,41 @@ function initialize() {
     })
 }
 
+function showMessage(text, duration = 1000) {
+    const mgsBox = document.getElementById("message");
+    mgsBox.innerText = text;
+    mgsBox.style.display = "block";
+
+    setTimeout(() => {
+        mgsBox.style.display = "none";
+    }, duration);
+}
+
+function showGameOverMessage(win) {
+    const gameOverDiv = document.getElementById("gameover");
+    const message = win ? 
+        `Yayy you did it! <br>You guessed the correct word "${word}"<br><br>` : 
+        `Better luck next time! <br>The answer was "${word}"<br><br>`;
+
+    gameOverDiv.innerHTML = `
+        <div>${message}</div>
+        <div id="popup-buttons">
+            <div id="replay-button" class="popup-button">🔁 Replay</div>
+            <div id="share-button" class="popup-button">📤 Share</div>
+        </div>
+        <br>
+    `;
+    gameOverDiv.style.display = "block";
+
+    // Add button functionality
+    document.getElementById("replay-button").addEventListener("click", () => location.reload());
+    document.getElementById("share-button").addEventListener("click", () => {
+        const shareText = `https://surimouli.github.io/Wordle/wordle.html`;
+        navigator.clipboard.writeText(shareText);
+        alert("Copied to clipboard!");
+    });
+}
+
 function processKey() {
     let e = {"code" : this.id};
     processInput(e);
@@ -86,6 +121,11 @@ function processKey() {
 
 function processInput(e) {
     if (gameOver) return;
+
+    if (e.ctrlKey || e.altKey || e.metaKey) {
+        //Ignore key presses with modifiers
+        return;
+    }
 
         //alert(e.code);
         if ("KeyA" <= e.code && e.code <= "KeyZ") {
@@ -110,7 +150,7 @@ function processInput(e) {
 
         if (!gameOver && row == height) {
             gameOver = true;
-            document.getElementById("answer").innerText = word;
+            showGameOverMessage(false);
         }
 }
 
@@ -127,7 +167,7 @@ function update() {
 
     guess = guess.toLowerCase();
     if (!guessList.includes(guess)) {
-        document.getElementById("answer").innerText = "Not a valid word!";
+        showMessage("Not a valid word!");
         return;
     }
 
@@ -162,6 +202,7 @@ function update() {
 
         if (correct == width) {
             gameOver = true;
+            showGameOverMessage(true);
         }
     }
 
@@ -182,6 +223,10 @@ function update() {
             }//Not in the word
             else {
                 currTile.classList.add("absent");
+                let keyTile = document.getElementById("Key" + letter);
+                if (!keyTile.classList.contains("correct") && !keyTile.classList.contains("present")) {
+                    keyTile.classList.add("absent");
+                }
             } 
         }
     }
@@ -189,3 +234,4 @@ function update() {
     row += 1; //start new row
     col = 0; //start at first column
 }
+
