@@ -4,7 +4,7 @@ body {
 }
 
 hr {
-    width: 500px;
+    width: auto;
 }
 
 #title {
@@ -22,12 +22,61 @@ hr {
     flex-wrap: wrap;
 }
 
+#message {
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 24px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    display: none;
+    z-index: 10;
+}
+
+#gameover {
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 24px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    display: none;
+    z-index: 10;
+}
+
+#popup-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;    
+}
+
+.popup-button {
+    background-color: #6aaa64;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.popup-button:hover {
+    background-color: #6aaa64;
+}
+
+
 .tile {
     /* Box */
     border: 2px solid lightgrey;
     width: 60px;
     height: 60px;
-    margin: 2.5px;
+    margin: 2px;
 
     /* Text */
     color: black;
@@ -50,7 +99,7 @@ hr {
     border-color: white;
 }
 
-.absend {
+.absent {
     background-color: #787C7E;
     color: white;
     border-color: white;
@@ -60,7 +109,8 @@ hr {
     width: 400px;
     margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 .key-tile {
